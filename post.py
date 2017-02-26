@@ -4,7 +4,11 @@ import time
 import datetime
 
 # Get images from directory
-images = dict((i, '') for i in os.listdir())
+images = dict((i, '') for i in os.listdir()
+              if os.path.splitext(i)[1] == '.jpg'
+              or os.path.splitext(i)[1] == '.JPG'
+              or os.path.splitext(i)[1] == '.png'
+              or os.path.splitext(i)[1] == '.PNG')
 
 # Get title
 print('Title: ', end='')
@@ -31,12 +35,8 @@ post.write('---\n'
 
 # Populate dictionary with captions
 for key in images.keys():
-    if images[key].endswith('.jpg') \
-            or images[key].endswith('.JPG') \
-            or images[key].endswith('.png') \
-            or images[key].endswith('.PNG'):
-        print('Image caption for ' + key + ': ', end='')
-        images[key] = input()
+    print('Image caption for ' + key + ': ', end='')
+    images[key] = input()
 
 # Write image links and captions to post
 for key, value in images.items():
