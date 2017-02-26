@@ -52,3 +52,6 @@ shutil.move(file_name, '/Users/Alex/Blog/_posts')
 # Move images to images
 for image in images:
     shutil.move(image, '/Users/Alex/Blog/images')
+
+# Open file in TextWrangler editor
+os.system('edit' + ' ' + '/Users/Alex/Blog/_posts/' + file_name)
