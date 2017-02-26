@@ -38,8 +38,8 @@ for key in images.keys():
     print('Image caption for ' + key + ': ', end='')
     images[key] = input()
 
-# Write image links and captions to post
-for key, value in images.items():
+# Write image links and captions to post in sorted order
+for key, value in sorted(images.items()):
     post.write('![' + value + '](/images/' + key + ')\n*' + value + '*')
     post.write('\n\n\n\n')
 
