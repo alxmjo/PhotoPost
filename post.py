@@ -11,13 +11,13 @@ images = dict((i, '') for i in os.listdir()
               or os.path.splitext(i)[1] == '.PNG')
 
 # Get title
-print('Title: ', end='')
-title = input()
+print('Permalink: ', end='')
+permalink = input()
 
 # Create filename and file
 now = datetime.datetime.now()
 file_name = str(now.year) + '-' + str('%02d' % now.month) + '-' \
-            + str('%02d' % now.day) + '-' + title.lower().replace(" ", "-") \
+            + str('%02d' % now.day) + '-' + permalink \
             + '.markdown'
 post = open(file_name, "w+")
 
@@ -26,10 +26,16 @@ utc_offset = int(time.localtime().tm_gmtoff / 3600)
 date = now.strftime("%Y-%m-%dT%H:%M:%S") + '+0' + str(utc_offset) + ':00'
 post.write('---\n'
            + 'layout: post' + '\n'
-           + 'title: ' + title + '\n'
            + 'date: ' + date + '\n'
-           + 'image: ' + '\n'
-           + 'summary: ' + '\n'
+           + 'permalink: ' + permalink + '\n'
+           + '\n'
+           + 'title: ""               # Empty quotes if this is a short.' + '\n'
+           + 'image:                  # /images/filename.jpg' + '\n'
+           + 'summary:                # A sentence or two about the post.' + '\n'
+           + 'category:               # "Category Name" (only one)' + '\n'
+           + 'tags:                   # newsletter' + '\n'
+           + 'sharing:                # Text to be shared on each network.' + '\n'
+           + '  twitter:' + '\n'
            + '---' + '\n'
            + '\n')
 
@@ -46,12 +52,19 @@ for key, value in sorted(images.items()):
 # Close file
 post.close()
 
+# Get post destination
+print('Post location (i.e. /Users/Alex/Blog/_posts): ', end='')
+post_loc = input()
+
 # Move post to _posts
-shutil.move(file_name, '/Users/Alex/Blog/_posts')
+shutil.move(file_name, post_loc)
+print('Post ' + file_name + ' moved to ' + post_loc)
+
+# Get images destination
+print('Post location (i.e. /Users/Alex/Blog/images): ', end='')
+image_loc = input()
 
 # Move images to images
 for image in images:
-    shutil.move(image, '/Users/Alex/Blog/images')
-
-# Open file in TextWrangler editor
-os.system('edit' + ' ' + '/Users/Alex/Blog/_posts/' + file_name)
+    shutil.move(image, image_loc)
+print('Images moved to ' + image_loc)
